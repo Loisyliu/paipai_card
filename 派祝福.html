@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<!-- 语言设为中文，确保兼容性 -->
+<html lang="zh-CN">
+<head>
+    <!-- 设置字符编码，防止中文乱码 -->
+    <meta charset="UTF-8">
+    <!-- 这个标签是适配手机屏幕的关键 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>🐎 派派的春节红包 🐎</title>
+    <!-- 从这里开始是控制页面样式的CSS代码 -->
+    <style>
+        /* 1. 设置全局样式：移除默认边距，使用喜庆的红色渐变背景 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Microsoft YaHei', sans-serif; /* 使用微软雅黑字体 */
+            background: linear-gradient(135deg, #FF6B6B, #FFD93D, #6BCB77, #4D96FF); /* 鲜艳的彩虹渐变背景 */
+            color: #FF6B6B; /* 红色字体 */
+            min-height: 100vh; /* 确保至少占满整个屏幕高度 */
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            overflow-x: hidden;
+        }
+
+        /* 2. 主卡片容器：模拟贺卡效果 */
+        .card {
+            background-color: rgba(255, 255, 255, 0.9); /* 半透明白色底 */
+            border-radius: 30px; /* 大圆角 */
+            padding: 30px 25px;
+            margin-top: 20px;
+            width: 95%; /* 宽度占屏幕95%，适应不同手机 */
+            max-width: 500px; /* 但在大屏上不超过500px */
+            border: 5px solid #FF6B6B; /* 红色实线边框 */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); /* 阴影增加立体感 */
+        }
+
+        /* 3. 标题样式：使用醒目的动画 */
+        h1 {
+            font-size: 2.5rem; /* 更大的字体 */
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* 文字阴影 */
+            color: #FF6B6B; /* 红色 */
+            animation: bounce 1s ease-in-out infinite alternate; /* 应用弹跳动画 */
+        }
+        /* 定义标题的弹跳动画 */
+        @keyframes bounce {
+            from { transform: translateY(0px); }
+            to { transform: translateY(-10px); }
+        }
+
+        /* 4. 祝福语段落样式 */
+        .greeting {
+            font-size: 1.5rem; /* 更大的字体 */
+            line-height: 2; /* 增加行高，更易阅读 */
+            margin: 25px 0;
+            padding: 0 10px;
+            color: #4ECDC4;
+            font-weight: bold;
+        }
+
+        /* 5. 装饰性元素：灯笼和鞭炮 */
+        .decorations {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+        }
+        .lantern {
+            font-size: 2rem;
+            animation: swing 2s ease-in-out infinite alternate;
+        }
+        .firecracker {
+            font-size: 1.5rem;
+            animation: crackle 0.5s ease-in-out infinite;
+        }
+        @keyframes swing {
+            from { transform: rotate(-5deg); }
+            to { transform: rotate(5deg); }
+        }
+        @keyframes crackle {
+            from { transform: scale(1); }
+            to { transform: scale(1.1); }
+        }
+
+        /* 6. 红包样式 */
+        .red-pocket {
+            width: 200px;
+            height: 150px;
+            background: linear-gradient(135deg, #FF2400, #C21807);
+            border-radius: 20px;
+            margin: 30px auto;
+            position: relative;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            border: 3px solid #FFD700;
+        }
+        .red-pocket:hover, .red-pocket:active {
+            transform: scale(1.1) rotate(5deg); /* 放大并旋转 */
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+        }
+        .red-pocket::before {
+            content: "🧧";
+            font-size: 5rem;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .red-pocket::after {
+            content: "点击拆红包";
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.2rem;
+            color: #FF6B6B;
+            font-weight: bold;
+        }
+
+        /* 7. 页脚样式 */
+        .footer {
+            margin-top: 30px;
+            font-size: 1rem;
+            opacity: 0.8;
+            color: #FF6B6B;
+        }
+
+        /* 8. 装饰性动画：飘落的“金花”和“爱心” */
+        .flake {
+            position: absolute;
+            font-size: 1.5rem;
+            pointer-events: none; /* 确保不干扰点击操作 */
+            opacity: 0.8;
+            animation: fall linear infinite;
+        }
+        /* 定义金花飘落的动画 */
+        @keyframes fall {
+            to { transform: translateY(100vh); }
+        }
+
+        /* 9. 音乐控制按钮 */
+        .music-control {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #FF6B6B;
+            color: white;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+
+        /* 10. 礼物弹窗样式 */
+        .gift-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            max-width: 90%;
+            width: 400px;
+        }
+        .gift-content {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        .gift-text {
+            font-size: 1.5rem;
+            color: #FF6B6B;
+            font-weight: bold;
+        }
+
+        /* 11. 动画效果类 */
+        @keyframes popIn {
+            from { transform: scale(0) translate(-50%, -50%); opacity: 0; }
+            to { transform: scale(1) translate(-50%, -50%); opacity: 1; }
+        }
+        @keyframes slideIn {
+            from { transform: translateY(-200px) translate(-50%, -50%); opacity: 0; }
+            to { transform: translateY(0) translate(-50%, -50%); opacity: 1; }
+        }
+        @keyframes rotateIn {
+            from { transform: rotate(0deg) scale(0) translate(-50%, -50%); opacity: 0; }
+            to { transform: rotate(360deg) scale(1) translate(-50%, -50%); opacity: 1; }
+        }
+        .animate-pop {
+            animation: popIn 0.5s ease-out forwards;
+        }
+        .animate-slide {
+            animation: slideIn 0.5s ease-out forwards;
+        }
+        .animate-rotate {
+            animation: rotateIn 0.5s ease-out forwards;
+        }
+    </style>
+</head>
+<body>
+    <!-- 音乐控制按钮 -->
+    <button class="music-control" onclick="toggleMusic()" id="musicBtn">🔊</button>
+
+    <!-- 页面主体内容 -->
+    <div class="card">
+        <!-- 装饰元素 -->
+        <div class="decorations">
+            <div class="lantern">🏮</div>
+            <div class="firecracker">🧨</div>
+            <div class="lantern">🏮</div>
+        </div>
+
+        <!-- 主标题 -->
+        <h1>🐎 派派的春节红包 🐎</h1>
+
+        <!-- 主要祝福语 -->
+        <p class="greeting">
+            新年快乐！<br>
+            快来拆红包吧！<br>
+            🎉 🎉 🎉
+        </p>
+
+        <!-- 红包交互元素 -->
+        <div class="red-pocket" onclick="openRedPocket()"></div>
+
+        <!-- 页脚署名 -->
+        <p class="footer">—— 三岁的派派  敬上 ——</p>
+    </div>
+
+    <!-- 从这里开始是控制交互的JavaScript代码 -->
+    <script>
+        // 1. 音乐控制变量
+        let music = null;
+        let isMusicPlaying = false;
+
+        // 2. 礼物数据
+        const gifts = [
+            { type: 'text', content: '新年快乐！', emoji: '🎉' },
+            { type: 'text', content: '恭喜发财！', emoji: '💰' },
+            { type: 'text', content: '身体健康！', emoji: '💪' },
+            { type: 'text', content: '万事如意！', emoji: '🌟' },
+            { type: 'text', content: '龙马精神！', emoji: '🐎' },
+            { type: 'emoji', content: '🌹', name: '漂亮的花' },
+            { type: 'emoji', content: '🎆', name: '绚丽的烟花' },
+            { type: 'emoji', content: '🌈', name: '美丽的彩虹' },
+            { type: 'emoji', content: '🍭', name: '甜甜的棒棒糖' },
+            { type: 'emoji', content: '🎁', name: '神秘礼物' },
+            { type: 'animal', content: '🐎', name: '小马' },
+            { type: 'animal', content: '🐯', name: '小老虎' },
+            { type: 'animal', content: '🐰', name: '小兔子' },
+            { type: 'animal', content: '🐶', name: '小狗' },
+            { type: 'animal', content: '🐷', name: '小猪' }
+        ];
+
+        // 3. 动画类型
+        const animations = ['animate-pop', 'animate-slide', 'animate-rotate'];
+
+        // 4. 动态创建飘落的装饰（金花、爱心、星星等）
+        function createFlakes() {
+            const decorations = ['✨', '💖', '🎊', '🎀', '🌟', '💫'];
+            const flakeCount = window.innerWidth < 768 ? 20 : 40;
+            
+            for (let i = 0; i < flakeCount; i++) {
+                setTimeout(() => {
+                    const flake = document.createElement('div');
+                    flake.classList.add('flake');
+                    flake.textContent = decorations[Math.floor(Math.random() * decorations.length)];
+                    flake.style.left = `${Math.random() * 100}vw`;
+                    flake.style.animationDuration = `${Math.random() * 3 + 4}s`;
+                    flake.style.opacity = Math.random() * 0.6 + 0.4;
+                    flake.style.fontSize = `${Math.random() * 2 + 1}rem`;
+                    flake.style.transform = `rotate(${Math.random() * 360}deg)`;
+                    
+                    document.body.appendChild(flake);
+                    
+                    setTimeout(() => { flake.remove(); }, 8000);
+                }, i * 200);
+            }
+        }
+
+        // 5. 初始化背景音乐
+        function initMusic() {
+            // 创建音频对象（使用浏览器支持的音频格式）
+            music = new Audio();
+            
+            // 注意：这里需要替换为实际的音乐文件路径
+            // 由于是示例，我们使用一个在线的春节音乐样本
+            music.src = 'https://assets.mixkit.co/active_storage/sfx/2735/2735-preview.mp3';
+            music.loop = true;
+            music.volume = 0.5;
+            
+            // 尝试自动播放音乐（符合浏览器自动播放政策）
+            music.play().catch(error => {
+                console.log('自动播放失败，需要用户交互后播放:', error);
+            });
+            
+            isMusicPlaying = true;
+        }
+
+        // 6. 切换音乐播放/暂停状态
+        function toggleMusic() {
+            if (!music) {
+                initMusic();
+                return;
+            }
+            
+            const musicBtn = document.getElementById('musicBtn');
+            
+            if (isMusicPlaying) {
+                music.pause();
+                musicBtn.textContent = '🔇';
+            } else {
+                music.play();
+                musicBtn.textContent = '🔊';
+            }
+            
+            isMusicPlaying = !isMusicPlaying;
+        }
+
+        // 7. 打开红包动画
+        function openRedPocket() {
+            const redPocket = document.querySelector('.red-pocket');
+            
+            // 红包点击动画
+            redPocket.style.transform = 'scale(0.8) rotate(10deg)';
+            
+            setTimeout(() => {
+                redPocket.style.transform = 'scale(1.1) rotate(-10deg)';
+            }, 100);
+            
+            setTimeout(() => {
+                redPocket.style.transform = 'scale(1) rotate(0deg)';
+                
+                // 显示随机礼物
+                showRandomGift();
+                
+                // 触发飘落装饰
+                createFlakes();
+            }, 200);
+        }
+
+        // 8. 显示随机礼物
+        function showRandomGift() {
+            // 移除已有的礼物弹窗
+            const existingPopup = document.querySelector('.gift-popup');
+            if (existingPopup) {
+                existingPopup.remove();
+            }
+            
+            // 随机选择礼物
+            const randomGift = gifts[Math.floor(Math.random() * gifts.length)];
+            
+            // 随机选择动画
+            const randomAnimation = animations[Math.floor(Math.random() * animations.length)];
+            
+            // 创建礼物弹窗
+            const popup = document.createElement('div');
+            popup.className = `gift-popup ${randomAnimation}`;
+            
+            // 设置礼物内容
+            let giftContent = '';
+            let giftText = '';
+            
+            switch (randomGift.type) {
+                case 'text':
+                    giftContent = randomGift.emoji;
+                    giftText = randomGift.content;
+                    break;
+                case 'emoji':
+                    giftContent = randomGift.content;
+                    giftText = randomGift.name;
+                    break;
+                case 'animal':
+                    giftContent = randomGift.content;
+                    giftText = `可爱的${randomGift.name}`;
+                    break;
+            }
+            
+            popup.innerHTML = `
+                <div class="gift-content">${giftContent}</div>
+                <div class="gift-text">${giftText}</div>
+            `;
+            
+            // 添加到页面
+            document.body.appendChild(popup);
+            
+            // 3秒后自动关闭弹窗
+            setTimeout(() => {
+                popup.style.opacity = '0';
+                popup.style.transform = 'translate(-50%, -50%) scale(0.5)';
+                popup.style.transition = 'all 0.5s ease';
+                
+                setTimeout(() => {
+                    popup.remove();
+                }, 500);
+            }, 3000);
+        }
+
+        // 9. 页面加载完成后，执行初始化
+        window.onload = function() {
+            // 首次创建背景装饰
+            createFlakes();
+            // 每8秒重新创建一批装饰
+            setInterval(createFlakes, 8000);
+            
+            // 初始化音乐
+            initMusic();
+        };
+    </script>
+</body>
+</html>
